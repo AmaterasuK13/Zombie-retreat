@@ -6,7 +6,7 @@ public abstract class Character : MonoBehaviour, IDamageable
 {
     #region fields
     [SerializeField]
-    protected float _maxHealth; // maximum of character health amount
+    protected float _maxHealth; 
     #endregion
 
     #region properties
@@ -23,7 +23,7 @@ public abstract class Character : MonoBehaviour, IDamageable
     #region methods
     protected void Awake()
     {
-        CurrentHealth = _maxHealth; // making character full hp at the beginning
+        CurrentHealth = _maxHealth;
         IsDead = false;
     }
 

@@ -12,15 +12,15 @@ public class Ammo : MonoBehaviour
     #region methods
     private void Update()
     {
-        Destroy(gameObject, 10);        // destroy object after the amount of time
+        Destroy(gameObject, 10);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))                 // check if contact with player
+        if (other.CompareTag("Player"))
         {
-            GameData.instance.ammoCount += _ammoAdd;    // give the amount of ammo to player
-            Destroy(gameObject);                        // destroy object
+            GameData.instance.ammoCount += _ammoAdd;
+            Destroy(gameObject);
         }
     }
     #endregion

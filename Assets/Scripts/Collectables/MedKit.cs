@@ -12,17 +12,17 @@ public class MedKit : MonoBehaviour
     #region methods
     private void Update()
     {
-        Destroy(gameObject, 10);                                            // destroy object after the amount of time
+        Destroy(gameObject, 10);
     }
 
     private void OnTriggerEnter(Collider other)                             
     {
-        if (other.CompareTag("Player"))                                     // check if contact with player
+        if (other.CompareTag("Player"))
         {
-            if (other.GetComponent<PlayerCharacter>().CurrentHealth < 3)    // check if players amount of hp is not full
+            if (other.GetComponent<PlayerCharacter>().CurrentHealth < 3)
             {
-                other.GetComponent<PlayerCharacter>().Heal(_healCount);     // healing player
-                Destroy(gameObject);                                        // destroy object
+                other.GetComponent<PlayerCharacter>().Heal(_healCount);
+                Destroy(gameObject);
             }
         }
     }

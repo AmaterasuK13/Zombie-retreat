@@ -12,7 +12,7 @@ public class EnemyMovement : MonoBehaviour, IMoveable
     private GameObject _player;
 
     [SerializeField]
-    private float _damage; // the amount of damage enemy dealing to player
+    private float _damage;
 
     [SerializeField]
     private ParticleSystem _blood;
@@ -26,23 +26,23 @@ public class EnemyMovement : MonoBehaviour, IMoveable
     #region methods
     private void Awake()
     {
-        _enemyCharacter = GetComponent<Character>();                // Getting components for fields
-        _anim = GetComponentInChildren<Animator>();                 //       
-        _agent = GetComponent<NavMeshAgent>();                      //
-        _player = GameObject.FindGameObjectWithTag("Player");       // Finding player in scene
+        _enemyCharacter = GetComponent<Character>();
+        _anim = GetComponentInChildren<Animator>();     
+        _agent = GetComponent<NavMeshAgent>();
+        _player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()
     {
-        Move();                 // Realizing enemy movement and death
-                                //
-        StopMoveAndDie();       //
+        MoveCharacter();
+
+        StopMoveAndDie();
     }
 
     /// <summary>
     /// Method that realize enemy movement
     /// </summary>
-    public void Move()
+    public void MoveCharacter()
     {
         _agent.SetDestination(_player.transform.position);
     }
@@ -64,20 +64,20 @@ public class EnemyMovement : MonoBehaviour, IMoveable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))                             // If enemy contact with player
+        if (other.CompareTag("Player"))
         {                                                           
-            _anim.SetTrigger("Attack");                             // Play attack animation
-            _bite.Play();                                           // Play attack sound clip
-            other.GetComponent<Character>().TakeDamage(_damage);    // Realize player taking damage
-            if (other.GetComponent<Character>().CurrentHealth <= 0) // If player die
+            _anim.SetTrigger("Attack");
+            _bite.Play();
+            other.GetComponent<Character>().TakeDamage(_damage);
+            if (other.GetComponent<Character>().CurrentHealth <= 0)
             {                                                       
-                _anim.SetBool("IfPlayerDeath", true);               // Play enemy taunt animation when player die
-                _agent.isStopped = true;                            // Stop enemy movement
+                _anim.SetBool("IfPlayerDeath", true);
+                _agent.isStopped = true;
             }
         }
-        else if (other.CompareTag("Bullet"))                        // If enemy contact with projectile
+        else if (other.CompareTag("Bullet"))
         {
-            _blood.Play();                                          // Play blood partical system
+            _blood.Play();
         }
     }
     #endregion

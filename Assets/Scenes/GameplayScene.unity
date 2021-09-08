@@ -9403,6 +9403,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pausePanel: {fileID: 988832152}
+  _gamePanel: {fileID: 201900599}
+  _lossPanel: {fileID: 1418903468}
   _player: {fileID: 1090629669}
   _heart1: {fileID: 837469099}
   _heart2: {fileID: 1199898633}
@@ -9410,6 +9412,7 @@ MonoBehaviour:
   _scoreText: {fileID: 266735736}
   _highScoreText: {fileID: 936878207}
   _ammoCountText: {fileID: 1350156152}
+  _finScoreText: {fileID: 1012079493}
 --- !u!1001 &1742442081
 PrefabInstance:
   m_ObjectHideFlags: 0

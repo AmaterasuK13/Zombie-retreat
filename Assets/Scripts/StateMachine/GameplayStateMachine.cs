@@ -8,58 +8,68 @@ public class GameplayStateMachine : MonoBehaviour
 {
     #region fields
     [SerializeField] 
-    private GameObject _pausePanel;         // get pause panel
-    [SerializeField] 
-    private GameObject _player;             // get player on scene
+    private GameObject _pausePanel;
+    [SerializeField]
+    private GameObject _gamePanel;
+    [SerializeField]
+    private GameObject _lossPanel;
 
     [SerializeField] 
-    private Image _heart1;                  // heart that shown first amount of hp
-    [SerializeField] 
-    private Image _heart2;                  // heart that shown second amount of hp
-    [SerializeField] 
-    private Image _heart3;                  // heart that shown third amount of hp
+    private GameObject _player;
 
     [SerializeField] 
-    private Text _scoreText;                // text showing current score
+    private Image _heart1;
     [SerializeField] 
-    private Text _highScoreText;            // text showing current high score
+    private Image _heart2;
     [SerializeField] 
-    private Text _ammoCountText;            // text showing current amount of bullets
+    private Image _heart3;
+
+    [SerializeField] 
+    private Text _scoreText;
+    [SerializeField] 
+    private Text _highScoreText;
+    [SerializeField] 
+    private Text _ammoCountText;
+    [SerializeField]
+    private Text _finScoreText;
     #endregion
 
     #region methods
     private void Start()
     {
-        _highScoreText.text = GameData.instance.highScore.ToString();       // show current high score
+        _highScoreText.text = GameData.instance.highScore.ToString();
     }
 
     private void Update()
     {
-        switch (_player.GetComponent<Character>().CurrentHealth)            // get character current health
+        switch (_player.GetComponent<Character>().CurrentHealth)
         {
-            case 3:                                                         // show three hearts if players hp is three
+            case 3:
                 _heart1.gameObject.SetActive(true);
                 _heart2.gameObject.SetActive(true);
                 _heart3.gameObject.SetActive(true);
                 break;
-            case 2:                                                         // show two hearts if players hp is two
+            case 2: 
                 _heart1.gameObject.SetActive(true);
                 _heart2.gameObject.SetActive(true);
                 _heart3.gameObject.SetActive(false);
                 break;
-            case 1:                                                         // show one hearts if players hp is one
+            case 1: 
                 _heart1.gameObject.SetActive(true);
                 _heart2.gameObject.SetActive(false);
                 _heart3.gameObject.SetActive(false);
                 break;
-            default:                                                        // show zero hearts if players hp is zero
+            default:
+                _gamePanel.GetComponent<Image>().color = new Color(1, .3f, .3f, .1f);
                 _heart1.gameObject.SetActive(false);
                 _heart2.gameObject.SetActive(false);
                 _heart3.gameObject.SetActive(false);
+                _lossPanel.SetActive(true);
+                _finScoreText.text = GameData.instance.currentScore.ToString();
                 break;
         }
-        _scoreText.text = GameData.instance.currentScore.ToString();        // show current score 
-        _ammoCountText.text = GameData.instance.ammoCount.ToString();       // show current amount of ammo
+        _scoreText.text = GameData.instance.currentScore.ToString();
+        _ammoCountText.text = GameData.instance.ammoCount.ToString();
     }
 
     /// <summary>

@@ -6,21 +6,21 @@ public abstract class Projectile : MonoBehaviour
 {
     #region fields
     [SerializeField]
-    protected float _damage;                // amount of damage projectile deal
+    protected float _projectileDamage;
 
     [SerializeField]
-    protected float _projectileSpeed;       // speed of projectile 
+    protected float _projectileSpeed;
     #endregion
 
     #region methods
     protected void Start()
     {
-        Destroy(gameObject, 5);     // destroy object after amount of time
+        Destroy(gameObject, 5);
     }
 
     protected void Update()
     {
-        ProjectileMovement();       // realizing projectile movement
+        ProjectileMovement();
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ public abstract class Projectile : MonoBehaviour
     /// </summary>
     public virtual void ProjectileMovement()
     {
-        transform.position += transform.forward * _projectileSpeed * Time.deltaTime;
+        transform.position += _projectileSpeed * Time.deltaTime * transform.forward;
     }
 
     /// <summary>
@@ -41,11 +41,11 @@ public abstract class Projectile : MonoBehaviour
 
     protected void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))                                  // check if projectile contact with enemy
+        if (other.CompareTag("Enemy"))
         {
-            other.GetComponent<EnemyCharacter>().TakeDamage(_damage);   // realize enemy taking damage
-            other.GetComponent<EnemyMovement>()._zombieGetHit.Play();   // play enemy getting damage audio clip
-            Destroy(gameObject);                                        // destroy object
+            other.GetComponent<EnemyCharacter>().TakeDamage(_projectileDamage);
+            other.GetComponent<EnemyMovement>()._zombieGetHit.Play();
+            Destroy(gameObject);
         }
     }
     #endregion

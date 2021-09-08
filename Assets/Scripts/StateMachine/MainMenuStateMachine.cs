@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class MainMenuStateMachine : MonoBehaviour
 {
     #region fields
-    [SerializeField] private GameObject _loadScreen;        // get load screen
-    [SerializeField] private Slider _loadingScreenSlider;   // get load screen slider
+    [SerializeField] private GameObject _loadScreen;  
+    [SerializeField] private Slider _loadingScreenSlider; 
 
     private AsyncOperation _async;
 
@@ -32,7 +32,7 @@ public class MainMenuStateMachine : MonoBehaviour
     }
 
 
-    IEnumerator LoadingScreen()                                     // realizing loading screen 
+    IEnumerator LoadingScreen() 
     {
         _loadScreen.SetActive(true);
         _async = SceneManager.LoadSceneAsync("GameplayScene");

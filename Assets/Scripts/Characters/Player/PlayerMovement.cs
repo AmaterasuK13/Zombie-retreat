@@ -7,142 +7,127 @@ public class PlayerMovement : MonoBehaviour, IMoveable
 {
     #region fields
     [SerializeField] 
-    private float _speed; // player character speed
+    private float _speed;
 
     [SerializeField]
-    private Animator _swatAnim; // player character animator
+    private Animator _swatAnim;
 
-    private Camera _camera; // main camera
+    private Vector3 _camForward;
+    private Vector3 _moveAnim;
+    private Vector3 _moveAnimInput;
 
-    [SerializeField]
-    private List<Projectile> _bullet; // variations of projectiles
+    private float _forwardAnimAmount;
+    private float _turnAnimAmount;
 
-    [SerializeField]
-    private List<float> _bulletShotDelay; // variations of projectiles shooting delay
-
-    [SerializeField] 
-    private Transform _shootPoint; // the point where projectiles spawn
-
-    [SerializeField] 
-    private GameObject _bulletFire; // fire partical system
-
-    [SerializeField] 
-    private GameObject _gamePanel; // in game UI panel
-
-    [SerializeField] 
-    private GameObject _lossPanel; // loss UI panel
-
-    [SerializeField] 
-    private Text _finScoreText; // text that show the final score when player die
-
-    private float _currentShootDelay = 0; // variable that realize shooting delay
+    private Camera _camera;
 
     private PlayerCharacter _playerCharacter; 
     private PlayerInput _playerInput;
     #endregion
 
-    #region properties
-    /// <summary>
-    /// Shows current using projectile
-    /// </summary>
-    public int CurrentProjectile { get; private set; }
-    #endregion
-
     #region methods
     private void Awake()
     {
-        _playerCharacter = GetComponent<PlayerCharacter>();     //
-        _playerInput = GetComponent<PlayerInput>();             // Getting components
-        _camera = Camera.main;                                  //
+        _playerCharacter = GetComponent<PlayerCharacter>();
+        _playerInput = GetComponent<PlayerInput>();           
+        _camera = Camera.main;                                  
     }
 
     private void Start()
     {
-        Time.timeScale = 1;             // Set time to go normal
-        GameData.instance.LoadData();   // Load all game datas
+        Time.timeScale = 1;            
+        GameData.instance.LoadData();  
     }
 
     private void Update()
     {
-        Move();         // Realizing player movement, rotation, shooting and death
+        MoveCharacter();        
 
-        Rotate();
+        RotateAndLookOnCoursor();
 
-        Shoot();
+        ShowThatYouDie();
+    }
 
-        Death();
+    private void FixedUpdate()
+    {
+        if (_camera != null)
+        {
+            _camForward = Vector3.Scale(_camera.transform.up, new Vector3(1, 0, 1)).normalized;
+            _moveAnim = _playerInput.MoveDirection.z * _camForward + _playerInput.MoveDirection.x * _camera.transform.right;
+        }
+        else
+            _moveAnim = _playerInput.MoveDirection.z * Vector3.forward + _playerInput.MoveDirection.x * Vector3.right;
+
+        AnimationController(_moveAnim);
+    }
+
+    private void AnimationController(Vector3 moveAnim)
+    {
+        if (moveAnim.magnitude > 1)
+        {
+            moveAnim.Normalize();
+        }
+
+        _moveAnimInput = moveAnim;
+
+        ConvertMoveInput();
+        UpdateAnimator();
+    }
+
+    private void ConvertMoveInput()
+    {
+        Vector3 localMove = transform.InverseTransformDirection(_moveAnimInput);
+        _turnAnimAmount = localMove.x;
+
+        _forwardAnimAmount = localMove.z;
+    }
+
+    private void UpdateAnimator()
+    {
+        _swatAnim.SetFloat("Forward", _forwardAnimAmount, 0.1f, Time.deltaTime);
+        _swatAnim.SetFloat("Turn", _turnAnimAmount, 0.1f, Time.deltaTime);
     }
 
     /// <summary>
     /// Method that realize player movement
     /// </summary>
-    public void Move()
+    public void MoveCharacter()
     {
-        if (!_playerCharacter.IsDead)       // check that player is alive
+        if (!_playerCharacter.IsDead)       
         {
             Vector3 newPosition = _playerInput.MoveDirection.normalized;
 
             transform.Translate(translation: _speed * Time.deltaTime * newPosition, Space.World);
-
-            if (_playerInput.MoveDirection != Vector3.zero)     // swithcing animations
-                _swatAnim.SetBool("isRunning", true);
-            else
-                _swatAnim.SetBool("isRunning", false);
         }
     }
 
     /// <summary>
-    /// Method that realize player shooting
+    /// Method that realize player visual death
     /// </summary>
-    public void Shoot()
+    public void ShowThatYouDie()
     {
-        if (GameData.instance.ammoCount > 0 && Time.time >= _currentShootDelay && _playerInput.IsShootig > 0)   // check that player got ammo,
-        {                                                                                                       // the delay of projectile comes to an end,
-            _bullet[CurrentProjectile].CreateProjectile(_shootPoint);  // create projectile                     // player pressed shoot button
-            _shootPoint.gameObject.GetComponent<AudioSource>().Play(); // play shoot audio clip
-            StartCoroutine(ShootFire());                               // play shoot particle system
-            _currentShootDelay = Time.time + _bulletShotDelay[CurrentProjectile];  // increase projectile delay 
-            GameData.instance.ammoCount--;                                         // spend ammo amount
-        }
-    }
-
-    /// <summary>
-    /// Method that realize player death
-    /// </summary>
-    public void Death()
-    {
-        if (_playerCharacter.IsDead)                                                    // check is player dead
+        if (_playerCharacter.IsDead)                                                    
         {
-            GameData.instance.SaveData();                                               // save progress
-            _gamePanel.GetComponent<Image>().color = new Color(1, .3f, .3f, .1f);       // make blood screen effect
-            GetComponentInChildren<Animator>().SetBool("isDead", true);                 // play player death animation
-            GetComponent<PlayerInput>().enabled = false;                                // swithc of player input
-            _lossPanel.SetActive(true);                                                 // activate loss game panel
-            _finScoreText.text = GameData.instance.currentScore.ToString();             // show final score 
+            GameData.instance.SaveData();
+            GetComponentInChildren<Animator>().SetBool("isDead", true);                 
+            GetComponent<PlayerInput>().enabled = false;
         }
     }
 
     /// <summary>
-    /// Method that realize player rotation
+    /// Method that realize player looking on mouse coursor
     /// </summary>
-    public void Rotate()
+    public void RotateAndLookOnCoursor()
     {
-        Ray ray = _camera.ScreenPointToRay(Input.mousePosition + new Vector3(25, -25, 0));  // creating ray
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);                            // creating invisible plane where ray points
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition + new Vector3(25, -25, 0));  
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);                            
 
-        if (groundPlane.Raycast(ray, out float rayDistance))                                // check if ray on the plane 
+        if (groundPlane.Raycast(ray, out float rayDistance))                                
         {
-            Vector3 point = ray.GetPoint(rayDistance);                                      // get the position of ray point on plane
-                Debug.DrawLine(ray.origin, point, Color.red);                               // show ray in scene mode
-                transform.LookAt(point);                                                    // rotate player to ray
+            Vector3 point = ray.GetPoint(rayDistance);                              
+                Debug.DrawLine(ray.origin, point, Color.red);                       
+                transform.LookAt(point);   
         }
-    }
-
-    IEnumerator ShootFire()                     // create fire partical system works
-    {
-        _bulletFire.SetActive(true);
-        yield return new WaitForSeconds(.2f);
-        _bulletFire.SetActive(false);
     }
     #endregion
 }

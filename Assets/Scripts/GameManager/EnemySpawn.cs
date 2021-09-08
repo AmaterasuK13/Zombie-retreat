@@ -54,17 +54,17 @@ public class EnemySpawn : MonoBehaviour
     #region methods
     private void Awake()
     {
-        WaveCount = 0;                                                      // making current wave first
-        _waveCountText.text = WaveCount.ToString();                         // showing current wave
-        _spawnPoint = GameObject.FindGameObjectsWithTag("EnemySpawner");    // find all enemies spawn points
+        WaveCount = 0;
+        _waveCountText.text = WaveCount.ToString(); 
+        _spawnPoint = GameObject.FindGameObjectsWithTag("EnemySpawner");
     }
 
     private void Update()
     {
         if (GameData.instance.enemyCount <= 0)                              // check if there are no enemies in scene
         {
-            StartCoroutine(WaitForWave());                                  // show after mave panel
-            Spawn();                                                        // spawn new enemies
+            StartCoroutine(WaitForWave());
+            Spawn(); 
         }
     }
 

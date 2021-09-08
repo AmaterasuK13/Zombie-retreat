@@ -7,7 +7,7 @@ public class PlayerInput : MonoBehaviour
 {
     #region fields
     [SerializeField ]
-    private GameplayStateMachine _state; // getting state machine component
+    private GameplayStateMachine _state;
     #endregion
 
     #region properties
@@ -25,11 +25,11 @@ public class PlayerInput : MonoBehaviour
     #region methods
     void Update()
     {
-        MoveDirection = new Vector3(Input.GetAxis(GameData.HORIZONTAL_AXIS), 0, Input.GetAxis(GameData.VERTICAL_AXIS));     // Move direction vector that depends of player input
+        MoveDirection = new Vector3(Input.GetAxis(GameData.HORIZONTAL_AXIS), 0, Input.GetAxis(GameData.VERTICAL_AXIS));
 
-        IsShootig = Input.GetAxis("Fire1");                                                                                 // Changing the value when player pressing fire button
+        IsShootig = Input.GetAxis("Fire1");
 
-        if (Input.GetKeyDown(KeyCode.Escape))                                                                               // Swithing on the pause panel when escape button pressed
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             _state.PauseOrUnpause();
         }

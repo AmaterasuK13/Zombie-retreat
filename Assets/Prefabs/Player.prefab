@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 9177358599591721030}
   - component: {fileID: 9177358599591721031}
   - component: {fileID: 1414984926762538997}
+  - component: {fileID: 4210811099436331593}
   - component: {fileID: 9177358599591721032}
   - component: {fileID: 9177358599591721035}
   - component: {fileID: 789850698813074949}
@@ -366,6 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2d490758a3dce04aa6ceb01325c8b16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _state: {fileID: 0}
 --- !u!114 &9177358599591721031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,14 +381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _shotPower: 10
   _swatAnim: {fileID: 9177358599046204073}
-  _bullet:
-  - {fileID: 7199567524851608847, guid: cfb411e4eeb858f4f9e04d070d1afe8f, type: 3}
-  _bulletShotDelay:
-  - 0.5
-  _shootPoint: {fileID: 9177358599187446635}
-  _bulletFire: {fileID: 9176878164465631017}
   _gamePanel: {fileID: 0}
   _lossPanel: {fileID: 0}
   _finScoreText: {fileID: 0}
@@ -403,6 +398,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 3
+--- !u!114 &4210811099436331593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9177358599591721028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b527821fa42df6468d84f7bb02a3191, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bullet:
+  - {fileID: 7199567524851608847, guid: cfb411e4eeb858f4f9e04d070d1afe8f, type: 3}
+  _bulletShotDelay:
+  - 0.5
+  _shootPoint: {fileID: 9177358599187446635}
+  _bulletFire: {fileID: 9176878164465631017}
 --- !u!136 &9177358599591721032
 CapsuleCollider:
   m_ObjectHideFlags: 0
