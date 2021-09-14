@@ -22,8 +22,8 @@ public class EnemyCharacter : Character
     public override void Die()
     {
         RandomDrop(_ammo, _medKit);
-        GameData.instance.enemyCount--;
-        GameData.instance.currentScore += _enemyDeathPoints;
+        GameData.Instance.enemyCount--;
+        GameData.Instance.currentScore += _enemyDeathPoints;
     }
 
     /// <summary>

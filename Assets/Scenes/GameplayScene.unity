@@ -1850,6 +1850,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114984678534704288, guid: c56ad059900471a41914b645b91e74aa,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c56ad059900471a41914b645b91e74aa, type: 3}
 --- !u!1 &285423757
@@ -9314,6 +9319,7 @@ GameObject:
   - component: {fileID: 1729781630}
   - component: {fileID: 1729781633}
   - component: {fileID: 1729781634}
+  - component: {fileID: 1729781635}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -9413,6 +9419,22 @@ MonoBehaviour:
   _highScoreText: {fileID: 936878207}
   _ammoCountText: {fileID: 1350156152}
   _finScoreText: {fileID: 1012079493}
+--- !u!114 &1729781635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1729781629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 279dbf533436c4df8bca6b01bc0a7510, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pooledObjects: []
+  objectToPool: {fileID: 1283800178298516672, guid: cfb411e4eeb858f4f9e04d070d1afe8f,
+    type: 3}
+  amountToPool: 20
 --- !u!1001 &1742442081
 PrefabInstance:
   m_ObjectHideFlags: 0

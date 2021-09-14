@@ -36,13 +36,13 @@ public class Shooter : MonoBehaviour, IShootable
 
     public void Shoot()
     {
-        if (GameData.instance.ammoCount > 0 && Time.time >= _currentShootDelay && _playerInput.IsShootig > 0)
+        if (GameData.Instance.ammoCount > 0 && Time.time >= _currentShootDelay && _playerInput.IsShootig > 0)
         {
             _bullet[CurrentProjectile].CreateProjectile(_shootPoint);
             _shootPoint.gameObject.GetComponent<AudioSource>().Play();
             StartCoroutine(ShootFire());
             _currentShootDelay = Time.time + _bulletShotDelay[CurrentProjectile];
-            GameData.instance.ammoCount--;
+            GameData.Instance.ammoCount--;
         }
     }
 

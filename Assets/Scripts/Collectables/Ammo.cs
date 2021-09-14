@@ -19,7 +19,7 @@ public class Ammo : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameData.instance.ammoCount += _ammoAdd;
+            GameData.Instance.ammoCount += _ammoAdd;
             Destroy(gameObject);
         }
     }

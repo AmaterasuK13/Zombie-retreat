@@ -12,7 +12,13 @@ public class PistolBullet : Projectile
 
     public override void CreateProjectile(Transform shootPoint)
     {
-        Instantiate(gameObject, shootPoint.position, shootPoint.rotation);
+        GameObject bullet = ObjectPooling.SharedInstance.GetPooledObject();
+        if (bullet != null)
+        {
+            bullet.transform.position = shootPoint.position;
+            bullet.transform.rotation = shootPoint.rotation;
+            bullet.SetActive(true);
+        }
     }
     #endregion
 }

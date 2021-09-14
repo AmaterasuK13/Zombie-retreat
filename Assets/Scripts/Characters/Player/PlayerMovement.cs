@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour, IMoveable
     private void Start()
     {
         Time.timeScale = 1;            
-        GameData.instance.LoadData();  
+        GameData.Instance.LoadData();  
     }
 
     private void Update()
@@ -108,7 +108,7 @@ public class PlayerMovement : MonoBehaviour, IMoveable
     {
         if (_playerCharacter.IsDead)                                                    
         {
-            GameData.instance.SaveData();
+            GameData.Instance.SaveData();
             GetComponentInChildren<Animator>().SetBool("isDead", true);                 
             GetComponent<PlayerInput>().enabled = false;
         }

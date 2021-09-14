@@ -10,7 +10,7 @@ public class GameData : MonoBehaviour
     public const string VERTICAL_AXIS = "Vertical";
     #endregion
 
-    public static GameData instance;
+    public static GameData Instance;
 
     public int currentScore = 0;
 
@@ -31,8 +31,8 @@ public class GameData : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
+        if (Instance == null)
+            Instance = this;
     }
 
     public void SaveData()

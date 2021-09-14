@@ -61,7 +61,7 @@ public class EnemySpawn : MonoBehaviour
 
     private void Update()
     {
-        if (GameData.instance.enemyCount <= 0)                              // check if there are no enemies in scene
+        if (GameData.Instance.enemyCount <= 0)                              // check if there are no enemies in scene
         {
             StartCoroutine(WaitForWave());
             Spawn(); 
@@ -76,13 +76,13 @@ public class EnemySpawn : MonoBehaviour
         for (int i = 0; i < _nextWaveRegularEnemyCount; i++)    // realize regular zombies spawn
         {
             Instantiate(_zombieRegular, _spawnPoint[Random.Range(0, _spawnPoint.Length)].transform.position, Quaternion.identity);
-            GameData.instance.enemyCount++;
+            GameData.Instance.enemyCount++;
         }
 
         for (int i = 0; i < _nextWaveFastEnemyCount; i++)       // realize fast zombies spawn
         {
             Instantiate(_zombieFast, _spawnPoint[Random.Range(0, _spawnPoint.Length)].transform.position, Quaternion.identity);
-            GameData.instance.enemyCount++;
+            GameData.Instance.enemyCount++;
         }
 
         if (WaveCount % 3 == 0 && WaveCount != 0)               // check if its wave where slow zombies should appear
@@ -90,7 +90,7 @@ public class EnemySpawn : MonoBehaviour
             for (int i = 0; i < _nextWaveSlowEnemyCount; i++)   // realize slow zombies spawn
             {
                 Instantiate(_zombieSlow, _spawnPoint[Random.Range(0, _spawnPoint.Length)].transform.position, Quaternion.identity);
-                GameData.instance.enemyCount++;
+                GameData.Instance.enemyCount++;
             }
             _nextWaveSlowEnemyCount += _nextWaveExtraSlowEnemyCount;
         }
@@ -100,7 +100,7 @@ public class EnemySpawn : MonoBehaviour
             for (int i = 0; i < _nextWaveBossEnemyCount; i++)   // realize boss zombies spawn
             {
                 Instantiate(_zombieBoss, _spawnPoint[Random.Range(0, _spawnPoint.Length)].transform.position, Quaternion.identity);
-                GameData.instance.enemyCount++;
+                GameData.Instance.enemyCount++;
             }
             _nextWaveBossEnemyCount += _nextWaveExtraBossEnemyCount;
         }

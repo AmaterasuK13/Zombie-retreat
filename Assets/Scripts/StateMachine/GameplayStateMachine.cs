@@ -37,7 +37,7 @@ public class GameplayStateMachine : MonoBehaviour
     #region methods
     private void Start()
     {
-        _highScoreText.text = GameData.instance.highScore.ToString();
+        _highScoreText.text = GameData.Instance.highScore.ToString();
     }
 
     private void Update()
@@ -65,11 +65,11 @@ public class GameplayStateMachine : MonoBehaviour
                 _heart2.gameObject.SetActive(false);
                 _heart3.gameObject.SetActive(false);
                 _lossPanel.SetActive(true);
-                _finScoreText.text = GameData.instance.currentScore.ToString();
+                _finScoreText.text = GameData.Instance.currentScore.ToString();
                 break;
         }
-        _scoreText.text = GameData.instance.currentScore.ToString();
-        _ammoCountText.text = GameData.instance.ammoCount.ToString();
+        _scoreText.text = GameData.Instance.currentScore.ToString();
+        _ammoCountText.text = GameData.Instance.ammoCount.ToString();
     }
 
     /// <summary>

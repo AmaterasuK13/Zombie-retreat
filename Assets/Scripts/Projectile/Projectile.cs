@@ -13,10 +13,6 @@ public abstract class Projectile : MonoBehaviour
     #endregion
 
     #region methods
-    protected void Start()
-    {
-        Destroy(gameObject, 5);
-    }
 
     protected void Update()
     {
@@ -45,7 +41,11 @@ public abstract class Projectile : MonoBehaviour
         {
             other.GetComponent<EnemyCharacter>().TakeDamage(_projectileDamage);
             other.GetComponent<EnemyMovement>()._zombieGetHit.Play();
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+        }
+        else if (other.CompareTag("Wall"))
+        {
+            gameObject.SetActive(false);
         }
     }
     #endregion
